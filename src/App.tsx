@@ -3,26 +3,16 @@ import products from "./utils/data.json"
 console.log("🚀 ~ products:", products)
 import { MdAddShoppingCart } from "react-icons/md";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
-import Cart from './components/Cart';
+import Cart, { Product } from './components/Cart';
 import { createPortal } from 'react-dom';
 import ConfirmOrder from './components/ConfirmOrder';
 
-interface Product {
-  image: {
-    thumbnail: string;
-    mobile: string;
-    tablet: string;
-    desktop: string;
-  };
-  name: string;
-  category: string;
-  price: number;
-}
+
 function App() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<Product[]>([]);
   const [isVisible, setIsVisible] = useState(false)
 
-  const addToCart = (product: { product: Product }) => {
+  const addToCart = (product: Product) => {
     setCart(prevCart => {
       const itemExists = prevCart.find(item => item.name === product.name && item.category === product.category);
       if (itemExists) {
@@ -39,7 +29,7 @@ function App() {
 
   // Function to remove a product from the cart
   const removeFromCart = (product: Product) => {
-    setCart(prevCart => {
+    setCart((prevCart) => {
       return prevCart
         .map(item => item.name === product.name ? { ...item, quantity: item.quantity - 1 } : item)
         .filter(item => item.quantity > 0);
@@ -73,7 +63,8 @@ function App() {
           {products?.map((product: any, index: number) => {
             const inCart = cart.some((item: any) => item.name === product.name && item.category === product.category);
             const productInCart = cart.find((item: any) => item.name === product.name && item.category === product.category);
-            const quantity = productInCart ? productInCart.quantity : 0;
+            // @ts-ignore
+            const quantity = productInCart ? productInCart?.quantity : 0;
             return (
               <article key={index} >
                 <div style={{

@@ -2,7 +2,22 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { RiTreeLine } from "react-icons/ri";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 
-const Cart = ({ cart, handleConfirmOrder, removeFromCart, addToCart }) => {
+export type Product = {
+    image?: any;
+    name: string;
+    category: string;
+    price: number;
+    quantity: number;
+};
+
+type CartProps = {
+    cart: Product[];
+    handleConfirmOrder: () => void;
+    removeFromCart: (product: Product) => void;
+    addToCart?: (product: Product) => void;
+};
+
+const Cart: React.FC<CartProps> = ({ cart, handleConfirmOrder, removeFromCart }) => {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     return (
         // <section className='cart-container'>

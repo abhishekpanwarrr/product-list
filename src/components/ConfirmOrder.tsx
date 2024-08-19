@@ -1,7 +1,11 @@
 import products from "../utils/data.json"
 import { FaRegCircleCheck } from "react-icons/fa6";
-
-const ConfirmOrder = ({ cart, handleStartNewOrder }) => {
+import { Product } from "./Cart";
+type ConfirmOrderProps = {
+    cart: Product[];
+    handleStartNewOrder: () => void;
+};
+const ConfirmOrder: React.FC<ConfirmOrderProps> = ({ cart, handleStartNewOrder }) => {
     console.log('ConfirmOrder rendered');
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     return (
@@ -13,9 +17,7 @@ const ConfirmOrder = ({ cart, handleStartNewOrder }) => {
                     <p className='confirm-subheading'>We hope you enjoy your food!</p>
                 </div>
                 <div className="confirm-list">
-                    {cart.map((item, index) => {
-                        console.log("🚀 ~ {cart.map ~ item:", item)
-
+                    {cart.map((item: Product, index: number) => {
                         return (<div key={index} className='confirm-item'>
                             <div className="confirm-image-container">
                                 <img src={item?.image?.desktop} />
