@@ -1,4 +1,4 @@
-import products from "../utils/data.json"
+
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { Product } from "./Cart";
 type ConfirmOrderProps = {
